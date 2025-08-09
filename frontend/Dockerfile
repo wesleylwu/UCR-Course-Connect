@@ -1,16 +1,17 @@
-FROM node:18
+FROM node:18-alpine AS build
 
-WORKDIR /usr/src/app/frontend
+WORKDIR /app
 
-COPY package*.json ./
+COPY package.json package-lock.json vite.config.ts tsconfig.json tsconfig.app.json tsconfig.node.json index.html ./
+COPY src ./src
+COPY public ./public
+
 RUN npm install
-
-COPY . .
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
-COPY --from=0 /usr/src/app/frontend/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
