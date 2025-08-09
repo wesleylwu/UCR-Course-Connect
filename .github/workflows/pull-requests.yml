@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm install
         working-directory: frontend
-      - run: npm run lint
+      - run: npm run eslint
         working-directory: frontend
 
   images:
