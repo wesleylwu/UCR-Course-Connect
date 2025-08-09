@@ -1,16 +1,15 @@
-FROM node:18-alpine
+FROM python:3.11-slim
 
-WORKDIR /usr/src/app/backend
+WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN npm run build
-
-ENV PORT=8080
-
-EXPOSE 8080
-
-CMD ["node", "dist/server.js"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

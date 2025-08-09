@@ -7,13 +7,11 @@ from contextlib import asynccontextmanager
 
 courses_data = []
 
-
 def refresh_data_periodically(interval_minutes=5):
     global courses_data
     while True:
         courses_data = load_courses_data()
         time.sleep(interval_minutes * 60)
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,12 +23,14 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+@app.get("/")
+def root():
+    return {"message": "Course Connect backend is running"}
 
 @app.get("/courses")
 def search_courses(search: str = "") -> List[dict]:
     search_lower = search.lower()
     return [course for course in courses_data if course["course_code"].lower().startswith(search_lower)]
-
 
 @app.get("/courses/{course_code}")
 def get_course_reviews(course_code: str):

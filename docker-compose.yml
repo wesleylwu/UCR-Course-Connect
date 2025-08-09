@@ -1,12 +1,12 @@
-version: "3.8"
+version: "3.9"
 
 services:
   backend:
     image: wesleylwu/ucr-course-connect-backend:latest
     ports:
-      - "8080:8080"
+      - "8000:8000"
     environment:
-      - PORT=8080
+      - PORT=8000
 
   frontend:
     image: wesleylwu/ucr-course-connect-frontend:latest
