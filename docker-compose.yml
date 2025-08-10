@@ -1,14 +1,36 @@
+# Deployment
+# version: "3.9"
+
+# services:
+#   backend:
+#     image: wesleylwu/ucr-course-connect-backend:latest
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - PORT=8000
+
+#   frontend:
+#     image: wesleylwu/ucr-course-connect-frontend:latest
+#     ports:
+#       - "3000:80"
+
+# Development
 version: "3.9"
 
 services:
   backend:
-    image: wesleylwu/ucr-course-connect-backend:latest
+    build: ./backend
     ports:
       - "8000:8000"
     environment:
       - PORT=8000
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
-    image: wesleylwu/ucr-course-connect-frontend:latest
+    build: ./frontend
     ports:
       - "3000:80"
+    volumes:
+      - ./frontend:/app

@@ -1,1 +1,0 @@
-UCR Course Connect Frontend

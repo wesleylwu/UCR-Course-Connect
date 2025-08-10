@@ -49,27 +49,3 @@ jobs:
         working-directory: frontend
       - run: npm run build
         working-directory: frontend
-
-  docker:
-    name: Build and Push Docker Images
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build backend image
-        run: |
-          docker build -t wesleywu/ucr-course-connect-backend:latest ./backend
-          docker push wesleywu/ucr-course-connect-backend:latest
-
-      - name: Build frontend image
-        run: |
-          docker build -t wesleywu/ucr-course-connect-frontend:latest ./frontend
-          docker push wesleywu/ucr-course-connect-frontend:latest
