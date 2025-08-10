@@ -82,7 +82,7 @@ npm install
 npm run dev
 
 # Open App:
-http://localhost:3000
+http://localhost:5173
 
 # Build for Production:
 npm run build
